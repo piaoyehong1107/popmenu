@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import PopMenu from "./PopMenu";
+
 
 ReactDOM.render(
   <div>
-      <PopMenu/>
+      <App />
   </div>,
   document.getElementById('root')
 );
