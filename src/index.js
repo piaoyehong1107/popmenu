@@ -3,12 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { BrowserRouter, Link, Route, Switch, Redirect } from "react-router-dom";
+import New from './New';
 
 ReactDOM.render(
-  <div>
-      <App />
-  </div>,
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={ ()=>{
+        return(
+          <App />
+        )
+      }} />
+      <Route exact path="/new" component={ ()=>{
+        return(
+          <New />
+        )
+      }} />
+    </Switch>
+</BrowserRouter>,
+
   document.getElementById('root')
 );
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Menu from "./Menu";
 import items from "./data";
 import { v4 } from 'uuid'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 // import logo from "./logo.JPG";
 
 function App() {
@@ -26,11 +27,11 @@ function App() {
     <main>
       <section className="menu section">
       <div className="header">
-        <input
-          value={typeValue}
-          onChange={(e) => setType(e.target.value)}
-        ></input>
-        <button onClick={handleClick} >ADD</button>
+        <Link to={{
+                  pathname: `/new`
+                }}>
+          New Menu
+        </Link>
       </div>
         <div className="title">
           {/* <img src={logo} alt="logo" className="logo" /> */}
