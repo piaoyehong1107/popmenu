@@ -1,14 +1,20 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import {Button, TextField} from '@material-ui/core';
 
 function New (){
+  let history = useHistory();
+  const handleSubmit = () => {
+    history.push('/');
+  }
+  const handleInputChange = () => {}
+
     return (
       <div style={{
         display: 'flex',
       }}>
         <span className={'form-outer'}>
-        <h2 style={{marginLeft: '20px'}}> Sign Up </h2>
+        <h2 style={{marginLeft: '20px'}}> New Menu </h2>
         <form className={'add-menu'} style={{
           display: 'flex',
           flexDirection: 'column',
@@ -18,44 +24,54 @@ function New (){
           justifyContent: 'space-evenly'
         }}>
           <TextField
-            id="username"
-            name="username"
-            label="Username"
-            type="username"
+            id="title"
+            name="title"
+            label="title"
+            type="title"
             style={{width: '250px'}}
             // value={}
-            autoComplete="current-username"
+            autoComplete="current-title"
             variant="outlined"
-            // onChange={this.handleInputChange}
+            onChange={handleInputChange}
           />
           <TextField
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
+            id="description"
+            name="description"
+            label="description"
+            type="description"
             style={{width: '250px'}}
             // value={}
-            autoComplete="current-password"
+            autoComplete="current-description"
             variant="outlined"
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
           />
           <TextField
-            id="email"
-            name="email"
-            label="Email"
-            type="mail"
+            id="price"
+            name="price"
+            label="price"
+            type="price"
             style={{width: '250px'}}
             // value={}
-            autoComplete="current-email"
+            autoComplete="current-price"
             variant="outlined"
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
           />
-          <div style={{marginTop: '20px', fontSize: '20px', color: 'grey'}}>Choose your avartar</div>
-          {/* <ImageSelection onPick={this.onPick}/> */}
-          <Button variant="contained" color="primary" onClick={this.handleSubmit}>Submit</Button>
-          {this.state.error.length>0 ? 
+          <TextField
+            id="image"
+            name="image"
+            label="image"
+            type="image"
+            style={{width: '250px'}}
+            // value={}
+            autoComplete="current-image"
+            variant="outlined"
+            onChange={handleInputChange}
+          />
+
+          <Button variant="contained" color="primary" onClick={handleSubmit}>Post</Button>
+          {/* {this.state.error.length>0 ? 
           <ul style={{color: 'red'}}>{this.state.error.map(mes=><li>{mes}</li>)} </ul> : null
-          }
+          } */}
         </form>
       </span>
       </div>
