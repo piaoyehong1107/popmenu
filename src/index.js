@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Link, Route, Switch, Redirect } from "react-router-dom";
-import New from './New';
+import MenuForm from './MenuForm';
+import Edit from './Edit';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -12,11 +13,6 @@ ReactDOM.render(
       <Route exact path="/" component={ ()=>{
         return(
           <App />
-        )
-      }} />
-      <Route exact path="/new" component={ ()=>{
-        return(
-          <New />
         )
       }} />
     </Switch>

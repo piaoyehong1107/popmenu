@@ -1,20 +1,38 @@
-import React from "react";
+import React, {useState} from "react";
 import { withRouter, useHistory } from 'react-router-dom';
 import {Button, TextField} from '@material-ui/core';
 
-function New (){
+
+function Edit ({item}){
   let history = useHistory();
+  const [newMenu, setNewMenu] = useState({
+    id: -1,
+    title: '',
+    price: '',
+    img: '',
+    desc: ''
+  })
+
   const handleSubmit = () => {
+    // const lastMenu = data[data.length - 1]
+    // data.push({  ...newMenu, id: lastMenu.id +1})
+    // console.log(data)
     history.push('/');
   }
-  const handleInputChange = () => {}
+
+  const handleInputChange = (e) => {
+    setNewMenu({
+      ...newMenu,
+      [e.target.name]: e.target.value
+    })
+  }
 
     return (
       <div style={{
         display: 'flex',
       }}>
         <span className={'form-outer'}>
-        <h2 style={{marginLeft: '20px'}}> New Menu </h2>
+        <h2 style={{marginLeft: '20px'}}> Edit </h2>
         <form className={'add-menu'} style={{
           display: 'flex',
           flexDirection: 'column',
@@ -29,7 +47,7 @@ function New (){
             label="title"
             type="title"
             style={{width: '250px'}}
-            // value={}
+            // value={item.title}
             autoComplete="current-title"
             variant="outlined"
             onChange={handleInputChange}
@@ -78,4 +96,4 @@ function New (){
     );
 
 }
-export default withRouter(New);
+export default withRouter(Edit);
