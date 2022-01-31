@@ -16,31 +16,31 @@ import "./index.css";
 const initialData = [
   {
     id: 1,
-    title: "cakes",
+    title: "Fried pork and vegetables",
     price: "15.99",
-    img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+    img: "https://media.istockphoto.com/photos/fried-pork-and-vegetables-on-white-background-picture-id1190330112?s=612x612",
+    desc: `Fried pork,salad,egg`,
   },
   {
     id: 2,
-    title: "pancakes",
-    price: "15.99",
-    img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=780&q=80",
-    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+    title: "Vegan Spinach Pasta",
+    price: "12.99",
+    img: "https://media.istockphoto.com/photos/vegan-glutenfree-creamy-spinach-pasta-picture-id1182467837?s=612x612",
+    desc: `Spinach pasta, Gluten-Free, Vegan cheese`,
   },
   {
     id: 3,
-    title: "pancakes",
+    title: "Fried chicken",
     price: "15.99",
-    img: "https://media.istockphoto.com/photos/foods-high-in-zinc-picture-id1289940519?s=612x612",
+    img: "https://media.istockphoto.com/photos/fried-chicken-picture-id524035688?s=612x612",
     desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
   },
   {
     id: 4,
-    title: "pancakes",
-    price: "15.99",
-    img: "https://media.istockphoto.com/photos/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors-picture-id1284690585?s=612x612",
-    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+    title: "Pork and rice dish",
+    price: "18.99",
+    img: "https://media.istockphoto.com/photos/pork-and-rice-dish-picture-id153561754?s=612x612",
+    desc: `Frided port, serverd with white rice and red pepper`,
   },
 ];
 
@@ -51,31 +51,50 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "80%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const confirmationStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "20%",
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
 };
 
 function App() {
-  let history = useHistory();
   const [menuItems, setMenuItems] = useState(initialData);
 
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [editItemId, setEditItemId] = React.useState("");
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [deleteItemId, setDeleteItemId] = React.useState("");
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const addMenu = (newMenu) => {
-    const lastMenu = menuItems[menuItems.length - 1];
-    menuItems.push({ ...newMenu, id: lastMenu.id + 1 });
+    let nextIndex = 0;
+    if (menuItems.length) {
+      nextIndex = menuItems.length - 1;
+    }
+    if (nextIndex === 0) {
+      menuItems.push(newMenu);
+    } else {
+      const lastMenu = menuItems[nextIndex];
+      menuItems.push({ ...newMenu, id: lastMenu.id + 1 });
+    }
     handleClose();
-    history.push("/");
   };
-  const removeMenu = (id) => {
-    const newMenus = [...menuItems];
-    newMenus.splice(id, 1);
-    setMenuItems(newMenus);
+  const removeMenu = (deleteItemId) => {
+    const newMenuItems = menuItems.filter((item) => item.id !== deleteItemId);
+    setMenuItems(newMenuItems);
+    handleDeleteClose();
   };
   const handleOpenEdit = () => {
     setOpenEdit(true);
@@ -89,9 +108,16 @@ function App() {
     setMenuItems(newMenuItems);
     handleEditClose();
   };
+  const openDeleteCheck = () => {
+    setOpenDelete(true);
+  };
 
   const handleEditClose = () => setOpenEdit(false);
   const editItem = menuItems.find((item) => item?.id === editItemId);
+  const handleDeleteClose = () => setOpenDelete(false);
+  const backToMain = () => {
+    handleDeleteClose();
+  };
 
   return (
     <main>
@@ -120,6 +146,35 @@ function App() {
               Edit Menu
             </Typography>
             <EditForm item={editItem} editMenu={handleEditMenu} />
+          </Box>
+        </Modal>
+        <Modal
+          open={openDelete}
+          onClose={handleDeleteClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={confirmationStyle}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Are you sure?
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() => removeMenu(deleteItemId)}
+              style={{ marginRight: "8px" }}
+            >
+              Yes
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => backToMain()}
+            >
+              Cancel
+            </Button>
           </Box>
         </Modal>
         <div className="header">
@@ -163,7 +218,10 @@ function App() {
                         variant="contained"
                         color="secondary"
                         size="small"
-                        onClick={() => removeMenu(item)}
+                        onClick={() => {
+                          setDeleteItemId(item.id);
+                          openDeleteCheck();
+                        }}
                       >
                         Delete
                       </Button>
